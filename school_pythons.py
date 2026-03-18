@@ -137,6 +137,37 @@ print(f"{games} games played: {cool_game(game_rules,"a",games)}\n")
 
 
 
+#WARNING. CHATGPT.
+#WARNING. CHATGPT.
+#WARNING. CHATGPT.
+
+A = [9, 12, 13, 14, 23, 24, 26, 27, 34, 35, 38, 39, 41, 44, 45, 63, 65, 68, 71, 80, 82, 87, 88, 94, 98, 99]
+
+def unique_subset_sums_by_length(arr):
+    """
+    Returns a list of sets: index i contains all unique sums of subsets of length i.
+    """
+    N = len(arr)
+    sums_by_len = [set() for _ in range(N + 1)]
+    sums_by_len[0].add(0)  # empty subset sum
+
+    for x in arr:
+        # iterate backwards to avoid modifying sets while iterating
+        for length in range(N, 0, -1):
+            # combine current element with sums of subsets of length-1
+            sums_by_len[length].update(s + x for s in sums_by_len[length - 1])
+    return sums_by_len
+
+# Compute sums
+sums_by_len = unique_subset_sums_by_length(A)
+
+# Print number of unique sums for each subset length
+for length, sums in enumerate(sums_by_len):
+    print(f"Subset length {length}: {len(sums)} unique sums")
+
+#WARNING. CHATGPT.
+#WARNING. CHATGPT.
+#WARNING. CHATGPT.
 
 
 import random
