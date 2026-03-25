@@ -263,7 +263,111 @@ for n in range(len(A)+1):
 
 
 
+import functools
+import sys
 
+sys.setrecursionlimit(100000)
+
+@functools.cache
+def fib(n):
+	if n == 0 or n == 1:
+		return n
+	return fib(n-1) + fib(n-2)
+
+n = 999
+# print(Rekurencja(0, 1, 1, 1, n))
+# print(fib(n))
+
+
+
+
+
+
+
+
+
+def power(base,exponent):
+
+
+	result = 1
+	b_exponent = (bin(exponent)[2:])[::-1]
+
+
+	for j in range(len(b_exponent)):
+		if b_exponent[j] == "1":
+			result *= base**(2**j)
+
+
+	return result
+
+# print(power(29,911))
+
+
+
+a = 252
+b = 105
+
+print(252 % 105)
+
+
+def euklides(a,b):
+	k_1, l_1 = 1,0
+	k_2, l_2 = 0,1
+
+	while b != 0:
+
+		q = a // b
+		a,b = b, a -q*b
+		k_1,k_2 = k_2, k_1 -q*k_2
+		l_1,l_2 = l_2, l_1 -q*l_2
+
+	return (a,k_1,l_1)
+
+print(euklides(1,10))
+
+def inverse(n):
+
+	result = []
+
+	for x in range(1,n):
+
+		NWD,a,b = euklides(x,n)
+		
+		if NWD == 1:
+			result.append(a % n)
+			continue
+		result.append(None)
+
+	return result
+print(inverse(100))
+
+
+
+
+exit()
+c = 0
+a = []
+while c < 10:
+	base  = random.randint(1,100_000)
+	power = random.randint(1,100_000)
+
+	result = 1
+	expo = (bin(power)[2:])[::-1]
+
+	# print(expo)
+
+	for j in range(len(expo)):
+		if expo[j] == "1":
+			result *= base**(2**j)
+
+
+	a.append(result == base ** power)
+	# # print(result)
+	# # print(base ** power)
+
+	c+=1
+
+print(all(a))
 
 
 
