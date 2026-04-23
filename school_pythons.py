@@ -373,4 +373,149 @@ print(all(a))
 
 
 
+def cykle_perm(A):
+
+
+	start = list(range(len(A)))
+	cykle = []
+	
+
+	while start != []:
+
+		cykl = [start[0]]
+		start.remove(start[0])
+		
+		while 1:
+
+			if cykl[0] != A[cykl[-1]]:
+				start.remove(A[cykl[-1]])
+				cykl.append(A[cykl[-1]])
+				
+				continue
+			break
+
+		cykle.append(cykl)
+		cykl = []
+
+
+	return cykle
+
+
+
+
+
+
+
+
+
+
+	temp_A = list(enumerate(A[:]))
+	cykle = []
+	print(temp_A)
+	end = [(None,None)] * len(A)
+	used = []
+	current = 0
+	start = list(range(len(A)))
+	
+	while temp_A != None:
+
+		if temp_A[0][0] != temp_A[0][1]:
+			cykl = [temp_A[0][0], temp_A[0][1]]
+		else:
+			del temp_A[0]
+
+		while 1:
+			print(cykl)
+			time.sleep(0.1)
+			if cykl[0] != temp_A[cykl[-1]][1]:
+				cykl.append(temp_A[cykl[-1]][1])
+				
+				continue
+			break
+
+		print(temp_A)
+		temp_A = [(pos,x) for pos,x in temp_A if pos not in cykl]
+		print(temp_A)
+	
+		cykle.append(cykl)
+		cykl.clear()
+
+
+
+
+# [1]
+# [1 2] [2 1]
+# [1 2 3] [1 3 2]
+
+def znak(A):
+
+	cykle = cykle_perm(A)
+
+	k = 0
+	for x in cykle:
+		k += len(x) - 1
+
+	return (-1) ** k
+
+
+def composition(*permutations):
+
+	l = lambda A, B : [B[A[x]] for x in range(len(A))]
+
+	res = permutations[-1]
+	for x in permutations[len(permutations)-2::-1]:
+		res = l(res, x)
+
+
+	return res
+
+
+
+def inverse(A):
+	inv = [None] * len(A)
+
+	for (pos,x) in enumerate(A):
+		inv[x] = pos
+
+	return inv
+
+def rand_perm(n): 
+	a = list(range(n))
+	random.shuffle(a)
+	return a
+
+def rand_perm2(n):
+	
+	a = list(range(n))
+	b = []
+	for x in range(n-1, -1, -1):
+		r = random.randint(0,x)
+		b.append(a[r])
+		del a[r]
+	return b
+
+print((rand_perm2(100)))
+a = [0,1,2,3,4,5,6]
+random.shuffle(a)
+
+  # [0, 1, 2, 3, 4, 5, 6]
+
+A = [3, 4, 1, 5, 6, 0, 2]
+B = [2, 5, 4, 3, 0, 6, 1]
+C = [5, 6, 3, 2, 0, 1, 4]
+D = [6, 0, 3, 5, 4, 1, 2]
+E = [5, 6, 1, 4, 3, 2, 0]
+F = [3, 1, 2, 0, 4, 5, 6]
+G = [3, 0, 5, 1, 6, 2, 4]
+A =        [3, 4, 1, 5, 6, 0, 2]
+Ainverse = [5, 2, 6, 0, 1, 4, 3]
+# print(inverse(A))
+# A(B(C(D(E(F(G(x))))))) = [4, 1, 5, 6, 3, 2, 0]
+
+
+
+print(cykle_perm(B))
+print(znak(B))
+# print(composition(A,B,C,D,E,F,G))
+[3, 0, 5, 1, 6, 2, 4] 
 
