@@ -519,3 +519,109 @@ print(znak(B))
 # print(composition(A,B,C,D,E,F,G))
 [3, 0, 5, 1, 6, 2, 4] 
 
+
+
+
+
+
+
+def perm(a):
+	n = len(a)
+	s = list(range(n+1))
+
+	for x in range(n):
+
+		s[x] , s[x+a[x]] = s[x+a[x]] , s[x]
+
+	return s
+
+
+def move_index(l):
+
+	max_vals = list(range(1,len(l)+1))[::-1]
+
+	place_to_change = 0
+	for x in range(len(l)-1,-1,-1):
+		if l[x] == max_vals[x]:
+			l[x] = 0
+			continue
+		l[x] += 1
+		break
+
+	return l
+
+
+def kamilations(l):
+
+	length = len(l)
+	lim = math.factorial(length)
+	indices = [0] * (length - 1)
+
+	for x in range(lim):
+
+		index_list = perm(indices)
+		
+		yield [l[n] for n in index_list]
+
+		move_index(indices)
+
+
+def get_perm(y,l):
+
+	if y > math.factorial(len(l))-1:
+		return -1
+	
+	lim = math.factorial(len(l)-1)
+
+	length = len(l)
+
+	index_list = []
+	count = 1
+
+	for x in range(2,length):
+		for z in range(length):
+			
+			if z * lim <= y <= (z+1) * lim - 1:
+				index_list.append(z)
+				break
+	
+		y %= lim
+		lim = math.factorial(len(l)-x)
+
+
+
+
+	index_list.append(y%2)
+
+	i_list = perm(index_list)
+	return [l[n] for n in i_list]
+
+
+
+for x in range(1,10):
+	break
+
+	l = [0] * x
+	itter = 0
+	correct_indexes = []
+	for x in range(math.factorial(len(l)+1)):
+		# print(itter,l,perm(l))
+		correct_indexes.append( (itter,perm(l)) )
+		l = move_index(l)
+		itter += 1
+
+	experimental_indexes = []
+	for x in range(math.factorial(len(l)+1)):
+
+		experimental_indexes.append( (x,get_perm(x,list(range(len(l)+1)))) )
+
+
+	# print(experimental_indexes[-1])
+	# print(correct_indexes[-1])
+	print(l,experimental_indexes == correct_indexes)
+
+
+
+print(get_perm(1000000000000000000000000000000000000000000000000000000000000000,[3,5,6,7,6,5,4,3,2,1,2,3,4,4,5,6,7,8,8,5,8,3,4,7,2,5,7,2,3,6,6,5,4,6,4,3,4,3,2,3,2,3,6,5,3,2,1,5,6,7]))
+
+
