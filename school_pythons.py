@@ -625,3 +625,63 @@ for x in range(1,10):
 print(get_perm(1000000000000000000000000000000000000000000000000000000000000000,[3,5,6,7,6,5,4,3,2,1,2,3,4,4,5,6,7,8,8,5,8,3,4,7,2,5,7,2,3,6,6,5,4,6,4,3,4,3,2,3,2,3,6,5,3,2,1,5,6,7]))
 
 
+
+
+
+
+
+
+
+def path_exists(a,steps,final_pos = None):
+
+
+	if final_pos is None:
+		final_pos = len(a) - 1
+
+	if a[final_pos] == 0: return False
+
+	possible = []
+
+	current_pos = 0
+	a.extend([0] * steps[-1])
+
+
+	while 1:
+
+
+		
+		for step in steps:
+			# print(a[current_pos], a[current_pos + step], step)
+			if a[current_pos + step] and current_pos + step not in possible:
+				possible.append(current_pos+step)
+
+
+		if len(possible) == 0: return False
+
+		possible.sort()
+		# print(possible)
+		current_pos = possible[0]
+		del possible[0]
+
+		if current_pos == final_pos: return True
+		# time.sleep(.1)
+
+	return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
