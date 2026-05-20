@@ -673,6 +673,125 @@ def path_exists(a,steps,final_pos = None):
 
 
 
+l = [random.randint(0,1_000) for x in range(10_000)]
+k = [random.randint(0,90) for x in range(2000)]
+# k = [1,0,3,1,3,1]
+l = [random.randint(0,1_000) for x in range(100)]
+
+def counting_2D(l,key):
+	
+	nums = [x[key] for x in l]
+
+	counts = [0] * (max(nums)+1)
+	result = [None] * len(l)
+	starting_indices = [0] * (max(nums)+1)
+	position_so_far = 0
+	position_list = []
+
+	for x in nums:
+		counts[x] += 1
+
+
+	for count in counts:
+		position_list.append(count + position_so_far)
+		position_so_far += count
+
+
+	for x in range(len(position_list)-1,0,-1):
+		position_list[x] = position_list[x-1]
+	position_list[0] = 0
+
+
+	for elem in l:
+		result[position_list[elem[key]]] = elem
+		position_list[elem[key]] += 1
+
+	return result
+
+
+def counting_for_radix(l, key):
+	
+	counts = [0] * 10
+	result = [None] * len(l)
+	position_so_far = 0
+	position_list = []
+	div = 10**key
+
+	for x in l:
+		counts[(x//div) % 10] += 1
+
+
+	for count in counts:
+		position_list.append(count + position_so_far)
+		position_so_far += count
+
+
+	for x in range(len(position_list)-1,0,-1):
+		position_list[x] = position_list[x-1]
+	position_list[0] = 0
+
+
+	for elem in l:
+		result[position_list[(elem//div) % 10]] = elem
+		position_list[(elem//div) % 10] += 1
+
+	return result
+
+
+
+def radix(l): 
+	
+	max_len = max(l)
+	max_len = int(math.log10(max_len))+1
+
+	for x in range(0,max_len):
+		l = counting_for_radix(l,x)
+
+	return l
+
+
+
+
+print(l)
+check = []
+a_time = []
+l_time = []
+
+
+for x in range(100):
+
+	l = [random.randint(0,1_000) for x in range(10_000)]
+
+	a = l[:]
+	t = time.time()
+	a.sort()
+	a_time.append(time.time() - t)
+	
+
+	t = time.time()
+	l = radix(l)
+	l_time.append(time.time() - t)
+
+	
+
+	check.append(l == a)
+
+print(all(check))
+
+print(sum(a_time)/len(a_time))
+print(sum(l_time)/len(l_time))
+
+
+l = [
+["A", 0],["B", 1],["C", 2],["D", 3],["E", 4],["F", 0],["G", 1],["H", 2],["I", 3],["J", 4],
+["K", 0],["L", 1],["M", 2],["N", 3],["O", 4],["P", 0],["Q", 1],["R", 2],["S", 3],["T", 4],
+["U", 0],["V", 1],["W", 2],["X", 3],["Y", 4],["Z", 0],
+]
+
+print(counting_2D(l,1))
+
+
+
 
 
 
