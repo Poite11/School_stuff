@@ -684,7 +684,6 @@ def counting_2D(l,key):
 
 	counts = [0] * (max(nums)+1)
 	result = [None] * len(l)
-	starting_indices = [0] * (max(nums)+1)
 	position_so_far = 0
 	position_list = []
 
