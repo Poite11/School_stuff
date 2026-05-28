@@ -790,7 +790,50 @@ l = [
 print(counting_2D(l,1))
 
 
+def heapify(arr, n, i):
 
+    while True:
+        current_pos = i
+
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < n and arr[l] > arr[current_pos]:
+            current_pos = l
+
+        if r < n and arr[r] > arr[current_pos]:
+            current_pos = r
+
+        if current_pos != i:
+            arr[i], arr[current_pos] = arr[current_pos], arr[i]
+            i = current_pos
+        else:
+            break
+
+
+def heapsort(arr):
+
+    n = len(arr)
+
+    # Build max heap
+    start = n // 2 - 1
+
+    for i in range(start, -1, -1):
+        heapify(arr, n, i)
+
+    # Extract elements one by one
+    for end in range(n - 1, 0, -1):
+        arr[0], arr[end] = arr[end], arr[0]
+
+        heapify(arr, end, 0)
+
+
+# Example
+arr = [4, 10, 3, 5, 1]
+
+heapsort(arr)
+
+print(arr)
 
 
 
